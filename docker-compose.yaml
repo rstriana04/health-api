@@ -1,0 +1,32 @@
+version: '3.7'
+services:
+  nginx:
+    image: nginx:1.19.2-alpine
+    restart: always
+    volumes:
+      - ./nginx/conf.d:/etc/nginx/conf.d
+    ports:
+      - 80:80
+    depends_on:
+      - app
+  pgsql:
+    image: postgres:12.4-alpine
+    restart: always
+    environment:
+      POSTGRES_USER:  health
+      POSTGRES_PASSWORD: health
+      POSTGRES_DB: healthdb
+    ports:
+      - 54329:5432
+  app:
+    restart: always
+    image: maven:3.6.3-jdk-11-slim
+    working_dir: /app/src/health-api
+    volumes:
+      - ./:/app/src/health-api
+      - ~/.m2:/root/.m2
+    expose:
+      - "80"
+    command: mvn clean spring-boot:run -X
+    depends_on:
+      - pgsql
