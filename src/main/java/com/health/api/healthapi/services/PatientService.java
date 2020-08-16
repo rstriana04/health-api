@@ -10,7 +10,7 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
-@Transactional(readOnly = true)
+@Transactional(readOnly = false)
 public class PatientService {
     @Autowired
     private IPatientRepository iPatientRepository;
@@ -27,5 +27,7 @@ public class PatientService {
     public Patient createPatient(Patient patient) {
         return iPatientRepository.save(patient);
     }
+
+
 
 }

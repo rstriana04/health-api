@@ -1,8 +1,12 @@
 package com.health.api.healthapi.models;
 
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.annotation.LastModifiedDate;
+
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
+import java.util.Date;
 
 @Entity
 @Table(name = "patients")
@@ -29,11 +33,14 @@ public class Patient {
     @NotBlank
     private String dateBirth;
 
-    private String photo;
+    @CreatedDate
+    private Date createdAt;
+
+    @LastModifiedDate
+    private Date updatedAt;
 
     public Patient() {
     }
-
 
     public Long getId() {
         return this.id;
@@ -59,8 +66,12 @@ public class Patient {
         return this.dateBirth;
     }
 
-    public String getPhoto() {
-        return this.photo;
+    public Date getCreatedAt() {
+        return this.createdAt;
+    }
+
+    public Date getUpdatedAt() {
+        return this.updatedAt;
     }
 
     public void setId(Long id) {
@@ -87,8 +98,12 @@ public class Patient {
         this.dateBirth = dateBirth;
     }
 
-    public void setPhoto(String photo) {
-        this.photo = photo;
+    public void setCreatedAt(Date createdAt) {
+        this.createdAt = createdAt;
+    }
+
+    public void setUpdatedAt(Date updatedAt) {
+        this.updatedAt = updatedAt;
     }
 
     public boolean equals(final Object o) {
@@ -114,9 +129,12 @@ public class Patient {
         final Object this$dateBirth = this.getDateBirth();
         final Object other$dateBirth = other.getDateBirth();
         if (this$dateBirth == null ? other$dateBirth != null : !this$dateBirth.equals(other$dateBirth)) return false;
-        final Object this$photo = this.getPhoto();
-        final Object other$photo = other.getPhoto();
-        if (this$photo == null ? other$photo != null : !this$photo.equals(other$photo)) return false;
+        final Object this$createdAt = this.getCreatedAt();
+        final Object other$createdAt = other.getCreatedAt();
+        if (this$createdAt == null ? other$createdAt != null : !this$createdAt.equals(other$createdAt)) return false;
+        final Object this$updatedAt = this.getUpdatedAt();
+        final Object other$updatedAt = other.getUpdatedAt();
+        if (this$updatedAt == null ? other$updatedAt != null : !this$updatedAt.equals(other$updatedAt)) return false;
         return true;
     }
 
@@ -139,12 +157,14 @@ public class Patient {
         result = result * PRIME + ($gender == null ? 43 : $gender.hashCode());
         final Object $dateBirth = this.getDateBirth();
         result = result * PRIME + ($dateBirth == null ? 43 : $dateBirth.hashCode());
-        final Object $photo = this.getPhoto();
-        result = result * PRIME + ($photo == null ? 43 : $photo.hashCode());
+        final Object $createdAt = this.getCreatedAt();
+        result = result * PRIME + ($createdAt == null ? 43 : $createdAt.hashCode());
+        final Object $updatedAt = this.getUpdatedAt();
+        result = result * PRIME + ($updatedAt == null ? 43 : $updatedAt.hashCode());
         return result;
     }
 
     public String toString() {
-        return "Patient(id=" + this.getId() + ", name=" + this.getName() + ", lastName=" + this.getLastName() + ", phone=" + this.getPhone() + ", gender=" + this.getGender() + ", dateBirth=" + this.getDateBirth() + ", photo=" + this.getPhoto() + ")";
+        return "Patient(id=" + this.getId() + ", name=" + this.getName() + ", lastName=" + this.getLastName() + ", phone=" + this.getPhone() + ", gender=" + this.getGender() + ", dateBirth=" + this.getDateBirth() + ", createdAt=" + this.getCreatedAt() + ", updatedAt=" + this.getUpdatedAt() + ")";
     }
 }
