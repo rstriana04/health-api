@@ -19,15 +19,15 @@ public class PatientController {
         this.patientService = patientService;
     }
 
-    @GetMapping("/patients")
-    public List<Patient> getPatients() {
-        return patientService.getAllPatients();
+    @GetMapping("/patients/{staffId}")
+    public List<Patient> getPatientsByStaff(@PathVariable Long staffId) {
+        return patientService.getAllPatientByStaff(staffId);
     }
 
-    @GetMapping("/patients/{patientId}")
-    public Optional<Patient> getPatientById(@PathVariable Long patientId) {
-        return patientService.getPatientById(patientId);
-    }
+//    @GetMapping("/patients/{patientId}")
+//    public Optional<Patient> getPatientById(@PathVariable Long patientId) {
+//        return patientService.getPatientById(patientId);
+//    }
 
     @PutMapping("/patients")
     public Patient updatePatient(@RequestBody @Valid Patient patient) {

@@ -28,6 +28,9 @@ public class PatientService {
         return iPatientRepository.save(patient);
     }
 
+    public List<Patient> getAllPatientByStaff(Long staffId) {
+        return iPatientRepository.selectPatientsByStaff(staffId);
+    }
 
 
 }

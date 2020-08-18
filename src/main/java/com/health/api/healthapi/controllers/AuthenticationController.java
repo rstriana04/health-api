@@ -3,6 +3,7 @@ package com.health.api.healthapi.controllers;
 import com.health.api.healthapi.models.User;
 import com.health.api.healthapi.payload.request.LoginRequest;
 import com.health.api.healthapi.payload.request.SignUpRequest;
+import com.health.api.healthapi.payload.response.ApiResponseAuth;
 import com.health.api.healthapi.payload.response.JwtResponse;
 import com.health.api.healthapi.repository.IUserRepository;
 import com.health.api.healthapi.security.jwt.JwtUtils;
@@ -65,13 +66,25 @@ public class AuthenticationController {
     }
 
     @PostMapping("/sign-up")
-    public ResponseEntity<String> signUp(@Valid @RequestBody SignUpRequest signUpRequest) {
+    public ResponseEntity<ApiResponseAuth> signUp(@Valid @RequestBody SignUpRequest signUpRequest) {
         if (iUserRepository.existsByUsername(signUpRequest.getUsername())) {
-            return new ResponseEntity<>("Error: Username is already taken!", HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<ApiResponseAuth>(
+                    new ApiResponseAuth(
+                            "Error: Username is already taken!",
+                            "400",
+                            null), HttpStatus.BAD_REQUEST
+            );
         }
 
+
         if (iUserRepository.existsByEmail(signUpRequest.getEmail())) {
-            return new ResponseEntity<>("Error: Email is already in use!", HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<ApiResponseAuth>(new ApiResponseAuth(
+                    "Error: Email is already in use!",
+                    "400",
+                    null
+            ),
+                    HttpStatus.BAD_REQUEST
+            );
         }
         User user = new User(
                 signUpRequest.getUsername(),
@@ -86,16 +99,22 @@ public class AuthenticationController {
         );
 
         iUserRepository.save(user);
-        return new ResponseEntity<>("User registered successfully", HttpStatus.OK);
+        return new ResponseEntity<ApiResponseAuth>(
+                new ApiResponseAuth(
+                        "¡User registered successfully!",
+                        "201",
+                        user),
+                HttpStatus.CREATED);
     }
 
     @GetMapping("/logout")
-    public String logout(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse) {
+    public ResponseEntity<ApiResponseAuth> logout(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse) {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         if (authentication != null) {
             new SecurityContextLogoutHandler().logout(httpServletRequest, httpServletResponse, authentication);
         }
-        return "Sesión Cerrada correctamente";
+        return new ResponseEntity<ApiResponseAuth>(new ApiResponseAuth("¡Session closed correctly!", "200", null),
+                HttpStatus.OK);
     }
 
     @GetMapping("/{token}")
