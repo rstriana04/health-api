@@ -24,6 +24,11 @@ public class PatientService {
         return iPatientRepository.findById(id);
     }
 
+    public void deletePatientById(Long patientId) {
+        iPatientRepository.deleteById(patientId);
+    }
+
+
     public Patient createPatient(Patient patient) {
         return iPatientRepository.save(patient);
     }

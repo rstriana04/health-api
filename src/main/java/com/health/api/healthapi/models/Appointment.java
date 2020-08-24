@@ -5,6 +5,7 @@ import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
 import java.util.Date;
 
 @Data
@@ -15,10 +16,15 @@ public class Appointment {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @OneToOne
-    @JoinColumn(name = "schedule_id")
-    private Schedule schedule;
+    @NotBlank
+    private String citationType;
 
+    @NotBlank
+    private String citation;
+
+    @ManyToOne
+    @JoinColumn(name = "staff_id")
+    private User user;
 
     @ManyToOne
     @JoinColumn(name = "patient_id")

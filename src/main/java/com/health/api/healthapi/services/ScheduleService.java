@@ -19,6 +19,11 @@ public class ScheduleService {
         return iScheduleRepository.findAll();
     }
 
+
+    public void deleteScheduleById(Long scheduleId) {
+        iScheduleRepository.deleteById(scheduleId);
+    }
+
     public Optional<Schedule> getScheduleById(Long id) {
         return iScheduleRepository.findById(id);
     }

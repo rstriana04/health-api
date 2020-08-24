@@ -2,6 +2,8 @@ package com.health.api.healthapi.controllers;
 
 import com.health.api.healthapi.models.Patient;
 import com.health.api.healthapi.services.PatientService;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -49,5 +51,18 @@ public class PatientController {
     public Patient createPatient(@RequestBody @Valid Patient patient) {
         return patientService.createPatient(patient);
     }
+
+
+    @DeleteMapping("/patients/{patientId}")
+    public ResponseEntity<Void> deletePatientById(@PathVariable Long patientId) {
+        try {
+            patientService.deletePatientById(patientId);
+            return new ResponseEntity<Void>(HttpStatus.OK);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return new ResponseEntity<Void>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
 
 }

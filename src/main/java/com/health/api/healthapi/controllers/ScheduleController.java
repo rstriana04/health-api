@@ -2,6 +2,8 @@ package com.health.api.healthapi.controllers;
 
 import com.health.api.healthapi.models.Schedule;
 import com.health.api.healthapi.services.ScheduleService;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -48,6 +50,17 @@ public class ScheduleController {
             e.printStackTrace();
         }
         return null;
+    }
+
+    @DeleteMapping("/schedules/{scheduleId}")
+    public ResponseEntity<Void> deleteScheduleById(@PathVariable Long scheduleId) {
+        try {
+            scheduleService.deleteScheduleById(scheduleId);
+            return new ResponseEntity<Void>(HttpStatus.OK);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return new ResponseEntity<Void>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
     }
 
 
