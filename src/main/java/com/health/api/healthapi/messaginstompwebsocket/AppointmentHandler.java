@@ -33,15 +33,14 @@ public class AppointmentHandler extends TextWebSocketHandler {
         Gson gson = new Gson();
         String p = gson.fromJson(payload, String.class);
         JSONObject data = new JSONObject(p);
-        Appointment appointment = new Appointment();
 
-        // Set User
-        JSONObject userObj = data.getJSONObject("user");
-        String citation = data.getString("citation");
-        String citationType = data.getString("citationType");
         String type = data.getString("type");
-
         if (type.equals("create")) {
+            // Set User
+            Appointment appointment = new Appointment();
+            JSONObject userObj = data.getJSONObject("user");
+            String citation = data.getString("citation");
+            String citationType = data.getString("citationType");
             User user = new User();
             user.setId(userObj.getLong("id"));
             user.setUsername(userObj.getString("username"));

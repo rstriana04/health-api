@@ -1,6 +1,9 @@
 package com.health.api.healthapi.models;
 
 import lombok.Data;
+import org.hibernate.annotations.Cascade;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 
@@ -26,7 +29,8 @@ public class Appointment {
     @JoinColumn(name = "staff_id")
     private User user;
 
-    @ManyToOne
+
+    @ManyToOne()
     @JoinColumn(name = "patient_id")
     private Patient patient;
 
